@@ -20,16 +20,3 @@ $router->add('/user/{id}', [
     'class' => 'App\Controllers\UserController',
     'function' => 'show',
 ]);
-
-/**
- * resolve the route
- * the resolve function will search for an matching route
- * when a matching route is found the given function will be triggerd. 
- * lets asume we have triggerd the route: /user/10
- * the function `show` from the class `UserController` will be called
- * the wildcard which is the number `10` will be passed on to the `show` function
- */
-$router->resolve([
-    'uri' => $_SERVER['REQUEST_URI'],
-    'method' => $_SERVER['REQUEST_METHOD'],
-]);
