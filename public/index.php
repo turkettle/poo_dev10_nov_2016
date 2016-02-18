@@ -39,7 +39,7 @@ try {
 } catch (Szenis\Exceptions\RouteNotFoundException $e) {
 	// route not found, add a nice 404 page here if you like 
 	die($e->getMessage());
-} catch (\Exception $e) {
+} catch (Szenis\Exceptions\InvalidArgumentException $e) {
 	// an exception has been caught, you could log it in a log file and show an 'something went wrong' page
 	die($e->getMessage());
 }
