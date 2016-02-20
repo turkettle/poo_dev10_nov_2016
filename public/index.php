@@ -32,14 +32,17 @@ try {
 	 * the function `show` from the class `UserController` will be called
 	 * the wildcard which is the number `10` will be passed on to the `show` function
 	 */
-	$resolver->resolve([
+	$response = $resolver->resolve([
 		'uri' => $_SERVER['REQUEST_URI'],
 		'method' => $_SERVER['REQUEST_METHOD'],
 	]);
+
+	echo $response;
+
 } catch (Szenis\Exceptions\RouteNotFoundException $e) {
 	// route not found, add a nice 404 page here if you like 
 	die($e->getMessage());
-} catch (\Exception $e) {
+} catch (Szenis\Exceptions\InvalidArgumentException $e) {
 	// an exception has been caught, you could log it in a log file and show an 'something went wrong' page
 	die($e->getMessage());
 }
