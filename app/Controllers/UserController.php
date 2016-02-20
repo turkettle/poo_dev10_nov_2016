@@ -10,10 +10,14 @@ class UserController
 	/**
 	 * Show the requested user
 	 *
-	 * @param  int|string $id
+	 * @param  string $id
+	 *
+	 * @return string
 	 */
 	public function show($id)
 	{
-		die(__FUNCTION__.' triggerd in '.__CLASS__.' argument value: '.$id);
+		$response = __FUNCTION__.' triggerd in '.__CLASS__.' argument value: '.$id;
+
+		return $response;
 	}
 }
