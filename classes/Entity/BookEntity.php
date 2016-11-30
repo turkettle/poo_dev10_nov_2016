@@ -2,12 +2,13 @@
 
 namespace Aston\Entity;
 
+use Aston\Entity\EntityInterface;
 use Aston\Manager\BookEntityManager;
 
 /**
  * Class BookEntity
  */
-class BookEntity
+class BookEntity implements EntityInterface
 {
     private $id;
     private $title;
@@ -42,7 +43,7 @@ class BookEntity
     {
     }
 
-    public static function create()
+    public function create()
     {
     }
 

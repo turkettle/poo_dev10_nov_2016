@@ -3,38 +3,29 @@
 namespace Aston\Manager;
 
 use Aston\Entity\BookEntity;
+use Aston\Entity\EntityInterface;
 
 /**
  * Class BookEntityManager.
  */
-class BookEntityManager
+class BookEntityManager extends EntityManager
 {
-    private $db;
+    protected $db;
 
     public function __construct(\PDO $db)
     {
         $this->db = $db;
     }
 
-    public function addBook(BookEntity $book)
-    {
-
-        $query = $this->db->prepare('INSERT INTO book (title, author, body) VALUES (:title, :author, :body)');
-        $query->bindValue(':title', $book->getTitle());
-        $query->bindValue(':author', $book->getAuthor());
-        $query->bindValue(':body', $book->getBody());
-
-        $executed = $query->execute();
-        // $errors = $db->errorInfo();
-        // Kint::dump($errors);
-        // Kint::dump($executed);
-    }
-
-    public function getBook($id)
+    public function addEntity(EntityInterface $entity)
     {
     }
 
-    public function getBooks(array $ids)
+    public function getEntity($id)
+    {
+    }
+
+    public function getEntities(array $ids)
     {
     }
 }
