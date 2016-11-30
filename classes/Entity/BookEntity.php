@@ -1,6 +1,9 @@
 <?php
 
-namespace Entity;
+namespace Aston\Entity;
+
+use Aston\Manager\BookEntityManager;
+
 /**
  * Class BookEntity
  */
@@ -13,7 +16,7 @@ class BookEntity
 
     protected $manager;
 
-    public function __construct(\Manager\BookEntityManager $manager)
+    public function __construct(BookEntityManager $manager)
     {
         $this->manager = $manager;
     }

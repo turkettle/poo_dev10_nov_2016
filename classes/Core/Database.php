@@ -1,6 +1,6 @@
 <?php
 
-namespace Core;
+namespace Aston\Core;
 
 /**
  * Created by PhpStorm.
