@@ -1,0 +1,18 @@
+{
+    "name": "aston/aston.dev",
+    "description": "Apprentissage de PHP Objet.",
+    "type": "project",
+    "require": {
+        "monolog/monolog": "^1.22"
+    },
+    "require-dev": {
+        "raveren/kint": "^1.0"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Aston Ecole",
+            "email": "aston@example.com"
+        }
+    ]
+}
