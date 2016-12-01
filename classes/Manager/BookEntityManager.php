@@ -28,4 +28,8 @@ class BookEntityManager extends EntityManager
     public function getEntities(array $ids)
     {
     }
+
+    public function getLastEntities($limit, $offset)
+    {
+    }
 }

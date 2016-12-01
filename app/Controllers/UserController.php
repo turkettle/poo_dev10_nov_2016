@@ -14,9 +14,10 @@ class UserController
 	 *
 	 * @return string
 	 */
-	public function show($id)
+	public function show()
 	{
-		$response = __FUNCTION__.' triggerd in '.__CLASS__.' argument value: '.$id;
+        \Kint::dump($GLOBALS, $_SERVER);
+		$response = __FUNCTION__.' triggerd in '.__CLASS__.' argument value: ';
 
 		return $response;
 	}
