@@ -1,7 +1,9 @@
 <?php
 
 $router->add('/', 'GET', function() {
-	return '<h2>Greetings</h2>';
+
+    return '<h2>Greetings</h2>';
+	// return $twig->render('home.html.twig');
 });
 
 $router->add('/docs/{*:url}', 'GET', function($url) {

@@ -6,4 +6,4 @@ use Szenis\Router;
 require __DIR__.'/../vendor/autoload.php';
 
 //  Système de routing.
-include __DIR__.'/../app/router.php';
+require __DIR__.'/../app/router.php';
