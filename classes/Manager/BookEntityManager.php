@@ -48,9 +48,7 @@ class BookEntityManager extends EntityManager
             if ($result) {
                 foreach ($result as $book) {
                     $entity = EntityFactory::get('bd');
-                    $entity->setId($book['id']);
-                    $entity->setTitle($book['title']);
-                    $entity->setAuthor($book['author']);
+                    $entity->hydrate($book);
                     $books[] = $entity;
                 }
             }

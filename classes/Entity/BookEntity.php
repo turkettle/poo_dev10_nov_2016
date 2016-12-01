@@ -48,6 +48,21 @@ abstract class BookEntity implements EntityInterface
     }
 
     /**
+     * Méthode d'hydratation.
+     * @param array $data
+     */
+    public function hydrate(array $data) {
+
+        foreach ($data as $property => $value) {
+
+            $setter = 'set' . ucfirst($property);
+            if (method_exists($this, $setter)) {
+                $this->$setter($value);
+            }
+        }
+    }
+
+    /**
      * @return mixed
      */
     public function getId()
