@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "798f28601b9c65918a6d284931e31cd7",
-    "content-hash": "28b7f72b136685b4d1a89a76f2b86a48",
+    "hash": "9bc61e40b671f9f23bb6a6f5aee49b84",
+    "content-hash": "5a2390993792f2390f8ab994b86aaf2f",
     "packages": [
         {
             "name": "monolog/monolog",
@@ -84,6 +84,55 @@
                 "psr-3"
             ],
             "time": "2016-11-26 00:15:39"
+        },
+        {
+            "name": "psr/container",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-fig/container.git",
+                "reference": "b58310e3f8de041e77745ca8f8eecac16dc3c171"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-fig/container/zipball/b58310e3f8de041e77745ca8f8eecac16dc3c171",
+                "reference": "b58310e3f8de041e77745ca8f8eecac16dc3c171",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Psr\\Container\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "PHP-FIG",
+                    "homepage": "http://www.php-fig.org/"
+                }
+            ],
+            "description": "Common Container Interface (PHP FIG PSR-11)",
+            "homepage": "https://github.com/php-fig/container",
+            "keywords": [
+                "PSR-11",
+                "container",
+                "container-interface",
+                "container-interop",
+                "psr"
+            ],
+            "time": "2016-09-09 07:50:00"
         },
         {
             "name": "psr/log",
@@ -294,7 +343,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "psr/container": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],

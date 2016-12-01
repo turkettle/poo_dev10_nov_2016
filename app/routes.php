@@ -3,28 +3,20 @@
 use Aston\Manager\BookEntityManager;
 use Aston\Core\Database;
 use Aston\Factory\EntityFactory;
+use Aston\Core\ServiceContainer;
 
 $router->add('/', 'GET', function () {
 
-    $loader = new Twig_Loader_Filesystem('../templates');
-
-    $twig = new Twig_Environment($loader, array(
-        // 'cache' => '/path/to/compilation_cache',
-        'debug' => true,
-    ));
+    $container = new ServiceContainer;
+    $twig = $container->get('twig');
 
     return $twig->render('home.html.twig');
 });
 
 $router->add('/book/list', 'GET', function () {
 
-    $loader = new Twig_Loader_Filesystem('../templates');
-
-    $twig = new Twig_Environment($loader, array(
-        // 'cache' => '/path/to/compilation_cache',
-        'debug' => true,
-    ));
-    $twig->addExtension(new Twig_Extension_Debug());
+    $container = new ServiceContainer;
+    $twig = $container->get('twig');
 
 
     $db = Database::getConnection('PDO');
@@ -49,6 +41,7 @@ $router->post('/book/post/add', function () {
     $entity = EntityFactory::get('paperback');
     $entity->hydrate($_POST);
     $entity->save();
+    header('Location: /book/add');
 });
 
 // $router->add('/docs/{*:url}', 'GET', function($url) {

@@ -5,7 +5,8 @@
   "require": {
     "monolog/monolog": "^1.22",
     "twig/twig": "^1.28",
-    "szenis/routing": "^1.1"
+    "szenis/routing": "^1.1",
+    "psr/container": "dev-master"
   },
   "require-dev": {
     "raveren/kint": "^1.0"
