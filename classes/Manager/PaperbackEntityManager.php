@@ -9,9 +9,10 @@
 namespace Aston\Manager;
 
 use Aston\Entity\BookEntity;
+use Aston\Entity\EntityInterface;
 
 
-class PaperBackEntityManager extends BookEntityManager
+class PaperbackEntityManager extends BookEntityManager
 {
 
     public function __construct(\PDO $db)
@@ -26,7 +27,7 @@ class PaperBackEntityManager extends BookEntityManager
         $query->bindValue(':title', $entity->getTitle());
         $query->bindValue(':author', $entity->getAuthor());
         $query->bindValue(':body', $entity->getBody());
-        $query->bindValue(':illustrator', $entity->getGenre());
+        $query->bindValue(':genre', $entity->getGenre());
 
         $executed = $query->execute();
         // $errors = $db->errorInfo();

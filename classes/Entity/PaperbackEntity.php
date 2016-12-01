@@ -9,7 +9,7 @@
 namespace Aston\Entity;
 
 
-class PaperBackEntity extends BookEntity
+class PaperbackEntity extends BookEntity
 {
 
     private $genre;

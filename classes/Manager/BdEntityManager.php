@@ -9,6 +9,7 @@
 namespace Aston\Manager;
 
 use Aston\Entity\BookEntity;
+use Aston\Entity\EntityInterface;
 
 
 class BdEntityManager extends BookEntityManager

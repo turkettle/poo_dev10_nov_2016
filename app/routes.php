@@ -2,6 +2,7 @@
 
 use Aston\Manager\BookEntityManager;
 use Aston\Core\Database;
+use Aston\Factory\EntityFactory;
 
 $router->add('/', 'GET', function () {
 
@@ -36,7 +37,6 @@ $router->add('/book/list', 'GET', function () {
 $router->add('/book/add', 'GET', function () {
 
     $loader = new Twig_Loader_Filesystem('../templates');
-
     $twig = new Twig_Environment($loader, array(
         // 'cache' => '/path/to/compilation_cache',
         'debug' => true,
@@ -45,9 +45,11 @@ $router->add('/book/add', 'GET', function () {
     return $twig->render('book_form.html.twig');
 });
 
-// $router->post('form/book/add', function () {
-//     Kint::dump($GLOBALS, $_SERVER);
-// });
+$router->post('/book/post/add', function () {
+    $entity = EntityFactory::get('paperback');
+    $entity->hydrate($_POST);
+    $entity->save();
+});
 
 // $router->add('/docs/{*:url}', 'GET', function($url) {
 // 	return $url;
