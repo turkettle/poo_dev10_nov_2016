@@ -26,6 +26,31 @@ $router->add('/book/add', 'GET', function () {
     return $twig->render('book_form.html.twig');
 });
 
+$router->add('/admin/log', 'GET', function () {
+
+    $twig = ServiceContainer::getInstance()->get('twig');
+    $log_file = '../log/aston.log';
+
+    $logs = null;
+    if (file_exists($log_file)) {
+        $content = file_get_contents($log_file);
+        $data = explode('[] []', $content);
+        $logs = [];
+
+        foreach ($data as $line) {
+            $line = trim($line);
+            if ($line) {
+
+                $elements = explode(' ', $line);
+                $elements[3] = str_replace('+', ' ', $elements[3]);
+                $logs[] = $elements;
+            }
+        }
+
+    }
+    return $twig->render('log_admin.html.twig', ['logs' => $logs]);
+});
+
 $router->post('/book/post/add', function () {
     $entity = EntityFactory::get('paperback');
     $entity->hydrate($_POST);

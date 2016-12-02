@@ -10,6 +10,7 @@ namespace Aston\Service;
 
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
+use Monolog\Formatter\JsonFormatter;
 
 
 class LoggerService implements ServiceInterface
@@ -18,7 +19,7 @@ class LoggerService implements ServiceInterface
     public static function getLibrary()
     {
         // create a log channel
-        $log = new Logger('name');
+        $log = new Logger('default');
         $log->pushHandler(new StreamHandler('../log/aston.log', Logger::WARNING));
 
         return $log;
