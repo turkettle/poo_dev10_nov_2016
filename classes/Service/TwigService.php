@@ -9,7 +9,7 @@
 namespace Aston\Service;
 
 
-class TwigService
+class TwigService implements ServiceInterface
 {
 
     public static function getLibrary()
