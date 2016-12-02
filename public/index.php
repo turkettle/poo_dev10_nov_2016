@@ -1,8 +1,5 @@
 <?php
 
-use Szenis\RouteResolver;
-use Szenis\Router;
-
 // Sytème d'autoloadiang de composer.
 require __DIR__.'/../vendor/autoload.php';
 

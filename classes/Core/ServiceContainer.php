@@ -14,24 +14,32 @@ use Psr\Container\ContainerInterface;
 class ServiceContainer implements ContainerInterface
 {
     private $services = [];
+    private static $instance = null;
+
+    public static function getInstance()
+    {
+        if (is_null(self::$instance)) {
+            $class = '\\' . __CLASS__;
+            self::$instance = new $class;
+        }
+
+        return self::$instance;
+    }
 
     public function get($id)
     {
-        if ($id == 'twig') {
+        if (!isset($this->services[$id])) {
 
-            if (!isset($this->services[$id])) {
-                $loader = new \Twig_Loader_Filesystem('../templates');
-                $twig = new \Twig_Environment($loader, array(
-                    // 'cache' => '/path/to/compilation_cache',
-                    'debug' => true,
-                ));
-                $twig->addExtension(new \Twig_Extension_Debug());
-                $this->services[$id] = $twig;
-                print 'TWIG CREE<br/>';
+            $service_class = '\Aston\Service\\' . ucfirst($id) . 'Service';
+            if (class_exists($service_class)) {
+                $service = $service_class::getLibrary();
+                $this->services[$id] = $service;
+            } else {
+                throw new \Exception('Le service "' .  ucfirst($id) . 'Service" n\'existe pas.');
             }
-
-            return $this->services[$id];
         }
+
+        return $this->services[$id];
     }
 
     public function has($id)

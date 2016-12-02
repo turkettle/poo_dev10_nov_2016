@@ -24,6 +24,7 @@
       "Aston\\Factory\\": "classes/Factory/",
       "Aston\\Entity\\": "classes/Entity/",
       "Aston\\Manager\\": "classes/Manager/",
+      "Aston\\Service\\": "classes/Service/",
       "App\\": "app/"
     }
   }
