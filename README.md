@@ -1,6 +1,9 @@
-# SimpleRoutingExample
-Working example for the <a href="https://github.com/stein189/SimpleRouting">szenis/routing</a> package
+# TODO List
 
-1. git clone git@github.com:stein189/SimpleRoutingExample.git
-2. composer install
-3. test it out
+1. Améliorer le système d'hydratation des entités
+2. Créer une classe Entity mère
+3. Améliorer le système de type de livre
+4. Mettre en place un système de token pour les formulaires
+5. Validation des formulaires
+6. Implémenter un ORM
+7. Système de message flash

@@ -58,4 +58,14 @@ class BookEntityManager extends EntityManager
             throw new \Exception('Mauvais type de donnée pour la limite.');
         }
     }
+
+    public function deleteBook($id) {
+        $id = (int)$id;
+
+        if ($id > 0) {
+            $query = $this->db->prepare('DELETE FROM book WHERE id=:id');
+            $query->bindValue(':id', $id);
+            $query->execute();
+        }
+    }
 }

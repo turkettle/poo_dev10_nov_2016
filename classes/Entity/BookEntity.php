@@ -41,6 +41,8 @@ abstract class BookEntity implements EntityInterface
 
     public function delete()
     {
+        $this->manager->deleteBook($this->getId());
+        // TODO : Message flash
     }
 
     public function create()

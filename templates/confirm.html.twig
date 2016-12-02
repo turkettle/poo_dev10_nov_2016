@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+
+    <form class="form-horizontal" action="/book/delete/confirm" method="post">
+
+        <div class="form-group">
+            <label for="title" class="col-sm-2 control-label">Voulez-vous supprimer le livre ?</label>
+            <div class="col-sm-10">
+                <input type="hidden" name="id" value="{{ id }}">
+                <a href="/book/list" class="btn btn-success">Annuler</a>
+                <input  type="submit" class="btn btn-danger" value="Supprimer">
+            </div>
+        </div>
+
+    </form>
+
+{% endblock %}

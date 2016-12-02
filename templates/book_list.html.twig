@@ -8,6 +8,7 @@
             <th>#</th>
             <th>Titre</th>
             <th>Auteur</th>
+            <th>Actions</th>
         </tr>
         </thead>
         <tbody>
@@ -17,6 +18,10 @@
                 <td>{{ book.getId }}</td>
                 <td>{{ book.getTitle }}</td>
                 <td>{{ book.getAuthor }}</td>
+                <td>
+                    <a class="btn btn-lg btn-info" href="/book/edit/{{ book.getId }}">Modifier</a>
+                    <a class="btn btn-lg btn-danger" href="/book/delete/{{ book.getId }}">Supprimer</a>
+                </td>
             </tr>
         {% endfor %}
 
