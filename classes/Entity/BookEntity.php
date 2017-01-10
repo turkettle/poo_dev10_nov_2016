@@ -4,11 +4,12 @@ namespace Aston\Entity;
 
 use Aston\Entity\EntityInterface;
 use Aston\Manager\BookEntityManager;
+use Aston\Factory\EntityFactory;
 
 /**
  * Class BookEntity
  */
-abstract class BookEntity implements EntityInterface
+class BookEntity implements EntityInterface
 {
     private $id;
     private $title;
@@ -28,7 +29,7 @@ abstract class BookEntity implements EntityInterface
         $this->manager->addBook($this);
     }
 
-    public function load($id)
+    public static function load($id)
     {
 
         // if (is_numeric($id)) {
@@ -46,8 +47,15 @@ abstract class BookEntity implements EntityInterface
         // TODO : Message flash
     }
 
-    public function create()
+    public static function create(array $data)
     {
+        if (isset($data['title']) && $data['title']) {
+            $book = EntityFactory::get('BookEntity');
+            $book->hydrate($data);
+            return $book;
+        } else {
+            throw new \Exception('Missing key "title" for Class BookEntity.');
+        }
     }
 
     /**

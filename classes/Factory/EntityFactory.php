@@ -12,10 +12,10 @@ use Aston\Core\Database;
  */
 class EntityFactory
 {
-    public static function get($entity_type)
+    public static function get($entity_class)
     {
-        $manager_class = 'Aston\Manager\\' . ucfirst($entity_type) . 'EntityManager';
-        $entity_class = 'Aston\Entity\\' . ucfirst($entity_type) . 'Entity';
+        $manager_class = 'Aston\Manager\\' . ucfirst($entity_class) . 'Manager';
+        $entity_class = 'Aston\Entity\\' . ucfirst($entity_class);
         $db = Database::getConnection('PDO');
 
         if (class_exists($entity_class)) {

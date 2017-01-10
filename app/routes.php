@@ -3,6 +3,7 @@
 use Aston\Core\Database;
 use Aston\Factory\EntityFactory;
 use Aston\Core\ServiceContainer;
+use Aston\Entity\BookEntity;
 
 $router->add('/', 'GET', function () {
 
@@ -58,10 +59,11 @@ $router->add('/book/delete/{n:id}', 'GET', function ($id) {
 });
 
 $router->post('/book/post/add', function () {
-    $entity = EntityFactory::get('paperback');
-    $entity->hydrate($_POST);
+    
+    $entity = BookEntity::create($_POST);
+    \kint::dump($entity);
     $entity->save();
-    header('Location: /book/add');
+    // header('Location: /book/add');
 });
 
 $router->post('/book/delete/confirm', function () {
