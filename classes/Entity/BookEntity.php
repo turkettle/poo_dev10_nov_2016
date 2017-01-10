@@ -1,31 +1,37 @@
 <?php
 
-namespace Entity;
+namespace Aston\Entity;
+
+use Aston\Entity\EntityInterface;
+use Aston\Manager\BookEntityManager;
+use Aston\Factory\EntityFactory;
+
 /**
  * Class BookEntity
  */
-class BookEntity
+class BookEntity implements EntityInterface
 {
     private $id;
     private $title;
     private $author;
     private $body;
-
+    private $genre;
+    
     protected $manager;
-
-    public function __construct(\Manager\BookEntityManager $manager)
+    
+    public function __construct(BookEntityManager $manager)
     {
         $this->manager = $manager;
     }
-
+    
     public function save()
     {
         $this->manager->addBook($this);
     }
-
-    public function load($id)
+    
+    public static function load($id)
     {
-
+        
         // if (is_numeric($id)) {
         //     $this = $this->manager->getBook($id);
         // } elseif (is_array($id)) {
@@ -34,15 +40,39 @@ class BookEntity
         //     throw new Exception('Mauvais format de donée pour la méthode load().');
         // }
     }
-
+    
     public function delete()
     {
+        $this->manager->deleteBook($this->getId());
+        // TODO : Message flash
     }
-
-    public static function create()
+    
+    public static function create(array $data)
     {
+        if (isset($data['title']) && $data['title']) {
+            $book = EntityFactory::get('BookEntity');
+            $book->hydrate($data);
+            return $book;
+        } else {
+            throw new \Exception('Missing key "title" for Class BookEntity.');
+        }
     }
-
+    
+    /**
+     * Méthode d'hydratation.
+     * @param array $data
+     */
+    public function hydrate(array $data) {
+        
+        foreach ($data as $property => $value) {
+            
+            $setter = 'set' . ucfirst($property);
+            if (method_exists($this, $setter)) {
+                $this->$setter($value);
+            }
+        }
+    }
+    
     /**
      * @return mixed
      */
@@ -50,7 +80,7 @@ class BookEntity
     {
         return $this->id;
     }
-
+    
     /**
      * @param mixed $id
      */
@@ -61,12 +91,12 @@ class BookEntity
             $this->id = $id;
         }
     }
-
+    
     public function getTitle()
     {
         return $this->title;
     }
-
+    
     public function setTitle($title)
     {
         $title = htmlentities($title);
@@ -76,7 +106,7 @@ class BookEntity
             throw new Exception('Le titre ne peut pas dépasser 50 caractères.');
         }
     }
-
+    
     /**
      * @return mixed
      */
@@ -84,7 +114,7 @@ class BookEntity
     {
         return $this->author;
     }
-
+    
     /**
      * @param mixed $author
      */
@@ -92,7 +122,7 @@ class BookEntity
     {
         $this->author = $author;
     }
-
+    
     /**
      * @return mixed
      */
@@ -100,7 +130,7 @@ class BookEntity
     {
         return $this->body;
     }
-
+    
     /**
      * @param mixed $body
      */
@@ -108,5 +138,21 @@ class BookEntity
     {
         $this->body = $body;
     }
-
+    
+    /**
+     * @return mixed
+     */
+    public function getGenre()
+    {
+        return $this->genre;
+    }
+    
+    /**
+     * @param mixed $genre
+     */
+    public function setGenre($genre)
+    {
+        $this->genre = $genre;
+    }
+    
 }

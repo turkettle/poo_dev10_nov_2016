@@ -1,18 +1,32 @@
 {
-    "name": "aston/aston.dev",
-    "description": "Apprentissage de PHP Objet.",
-    "type": "project",
-    "require": {
-        "monolog/monolog": "^1.22"
-    },
-    "require-dev": {
-        "raveren/kint": "^1.0"
-    },
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Aston Ecole",
-            "email": "aston@example.com"
-        }
-    ]
+  "name": "aston/aston.dev",
+  "description": "Apprentissage de PHP Objet.",
+  "type": "project",
+  "require": {
+    "monolog/monolog": "^1.22",
+    "twig/twig": "^1.28",
+    "szenis/routing": "^1.1",
+    "psr/container": "dev-master",
+    "swiftmailer/swiftmailer": "^5.4"
+  },
+  "require-dev": {
+    "raveren/kint": "^1.0"
+  },
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Aston Ecole",
+      "email": "aston@example.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Aston\\Core\\": "classes/Core/",
+      "Aston\\Factory\\": "classes/Factory/",
+      "Aston\\Entity\\": "classes/Entity/",
+      "Aston\\Manager\\": "classes/Manager/",
+      "Aston\\Service\\": "classes/Service/",
+      "App\\": "app/"
+    }
+  }
 }
