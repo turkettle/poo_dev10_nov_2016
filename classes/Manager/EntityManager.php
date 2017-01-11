@@ -11,7 +11,7 @@ namespace Aston\Manager;
 
 use Aston\Entity\EntityInterface;
 
-abstract class EntityManager
+abstract class EntityManager implements EntityManagerInterface
 {
     protected $bd;
 

@@ -6,6 +6,9 @@ use Aston\Entity\BookEntity;
 use Aston\Entity\AuthorEntity;
 
 $router->add('/', 'GET', function () {
+    
+    $book = BookEntity::load(2);
+    \Kint::dump($book);die();
 
     $twig = ServiceContainer::getInstance()->get('twig');
     return $twig->render('home.html.twig');

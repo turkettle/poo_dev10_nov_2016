@@ -12,13 +12,12 @@ class EntityFactory
 {
     public static function get($entity_class)
     {
-        $namespaced_class = 'Aston\Entity\\' . ucfirst($entity_class);
     
-        if (class_exists($namespaced_class)) {
+        if (class_exists($entity_class)) {
             
             $manager = EntityManagerFactory::get($entity_class);
-            $entity = new $namespaced_class($manager);
-            
+            $entity = new $entity_class($manager);
+    
             return $entity;
         }
         else {

@@ -15,5 +15,4 @@ interface EntityInterface
     public static function load($id);
     public function save();
     public function delete();
-
 }

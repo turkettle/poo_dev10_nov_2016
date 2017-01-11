@@ -2,14 +2,13 @@
 
 namespace Aston\Entity;
 
-use Aston\Entity\EntityInterface;
 use Aston\Manager\AuthorEntityManager;
 use Aston\Factory\EntityFactory;
 
 /**
  * Class AuthorEntity
  */
-class AuthorEntity implements EntityInterface
+class AuthorEntity extends Entity
 {
     private $id;
     private $name;
@@ -29,21 +28,21 @@ class AuthorEntity implements EntityInterface
     
     public static function load($id)
     {
-    //     if (is_numeric($id)) {
-    //
-    //         $manager = EntityManagerFactory::get('BookEntity');
-    //         $data = $manager->getEntity($id);
-    //         if (!$data) {
-    //             return false;
-    //         }
-    //         $entity = BookEntity::create($data);
-    //         return $entity;
-    //
-    //     } elseif (is_array($id)) {
-    //         // $this = $this->manager->getBooks($id);
-    //     } else {
-    //         throw new Exception('Mauvais format de donnée pour la méthode load().');
-    //     }
+        if (is_numeric($id)) {
+    
+            $manager = EntityManagerFactory::get('AuthorEntity');
+            $data = $manager->getEntity($id);
+            if (!$data) {
+                return false;
+            }
+            $entity = BookEntity::create($data);
+            return $entity;
+    
+        } elseif (is_array($id)) {
+            // $this = $this->manager->getBooks($id);
+        } else {
+            throw new Exception('Mauvais format de donnée pour la méthode load().');
+        }
     }
     
     public function delete()

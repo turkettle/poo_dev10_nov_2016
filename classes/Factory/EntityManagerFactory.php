@@ -14,7 +14,9 @@ class EntityManagerFactory
 {
     public static function get($entity_class)
     {
-        $manager_class = 'Aston\Manager\\' . ucfirst($entity_class) . 'Manager';
+    
+        $class_data = explode('\\', $entity_class);
+        $manager_class = 'Aston\Manager\\' . end($class_data) . 'Manager';
     
         if (class_exists($manager_class)) {
             
