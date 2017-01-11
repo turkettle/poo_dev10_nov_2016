@@ -16,9 +16,10 @@ class EntityFactory
     {
         $manager_class = 'Aston\Manager\\' . ucfirst($entity_class) . 'Manager';
         $entity_class = 'Aston\Entity\\' . ucfirst($entity_class);
-        $db = Database::getConnection('PDO');
-        
+    
         if (class_exists($entity_class)) {
+            
+            $db = Database::getConnection('PDO');
             $manager = new $manager_class($db);
             $entity = new $entity_class($manager);
             return $entity;
