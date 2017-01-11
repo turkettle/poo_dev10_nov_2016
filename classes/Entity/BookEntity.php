@@ -26,24 +26,31 @@ class BookEntity implements EntityInterface
     
     public function save()
     {
-        $this->manager->addBook($this);
+        $this->manager->addEntity($this);
     }
     
     public static function load($id)
     {
-        
-        // if (is_numeric($id)) {
-        //     $this = $this->manager->getBook($id);
-        // } elseif (is_array($id)) {
-        //     $this = $this->manager->getBooks($id);
-        // } else {
-        //     throw new Exception('Mauvais format de donée pour la méthode load().');
-        // }
+        if (is_numeric($id)) {
+    
+            $manager = EntityManagerFactory::get('BookEntity');
+            $data = $manager->getEntity($id);
+            if (!$data) {
+                return false;
+            }
+            $entity = BookEntity::create($data);
+            return $entity;
+            
+        } elseif (is_array($id)) {
+            // $this = $this->manager->getBooks($id);
+        } else {
+            throw new Exception('Mauvais format de donée pour la méthode load().');
+        }
     }
     
     public function delete()
     {
-        $this->manager->deleteBook($this->getId());
+        $this->manager->deleteEntity($this->getId());
         // TODO : Message flash
     }
     

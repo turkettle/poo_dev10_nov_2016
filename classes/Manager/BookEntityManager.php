@@ -20,7 +20,6 @@ class BookEntityManager extends EntityManager
     
     public function addEntity(EntityInterface $entity)
     {
-        
         $query = $this->db->prepare('INSERT INTO book (title, author, body, genre) VALUES (:title, :author, :body, :genre)');
         $query->bindValue(':title', $entity->getTitle());
         $query->bindValue(':author', $entity->getAuthor());
@@ -28,13 +27,22 @@ class BookEntityManager extends EntityManager
         $query->bindValue(':genre', $entity->getGenre());
         
         $executed = $query->execute();
-        // $errors = $db->errorInfo();
-        // Kint::dump($errors);
-        // Kint::dump($executed);
+        $errors = $this->db->errorInfo();
+        // \Kint::dump($errors);
+        // \Kint::dump($executed);
     }
     
     public function getEntity($id)
     {
+        $id = (int) $id;
+        if ($id > 0) {
+            $query = $this->db->prepare('SELECT * FROM book WHERE id=:id');
+            $query->bindValue(':id', $id, \PDO::PARAM_INT);
+            $query->execute();
+            
+            $result = $query->fetch(\PDO::FETCH_ASSOC);
+            return $result;
+        }
     }
     
     public function getEntities(array $ids)
@@ -54,17 +62,7 @@ class BookEntityManager extends EntityManager
             
             $executed = $query->execute();
             $result = $query->fetchAll(\PDO::FETCH_ASSOC);
-            
-            $books = [];
-            if ($result) {
-                foreach ($result as $book) {
-                    $entity = EntityFactory::get('bd');
-                    $entity->hydrate($book);
-                    $books[] = $entity;
-                }
-            }
-            
-            return $books;
+            return $result;
         } else {
             throw new \Exception('Mauvais type de donnée pour la limite.');
         }

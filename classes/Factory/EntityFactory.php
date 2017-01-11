@@ -2,8 +2,6 @@
 
 namespace Aston\Factory;
 
-use Aston\Core\Database;
-
 /**
  * Created by PhpStorm.
  * User: aston
@@ -14,14 +12,13 @@ class EntityFactory
 {
     public static function get($entity_class)
     {
-        $manager_class = 'Aston\Manager\\' . ucfirst($entity_class) . 'Manager';
-        $entity_class = 'Aston\Entity\\' . ucfirst($entity_class);
+        $namespaced_class = 'Aston\Entity\\' . ucfirst($entity_class);
     
-        if (class_exists($entity_class)) {
+        if (class_exists($namespaced_class)) {
             
-            $db = Database::getConnection('PDO');
-            $manager = new $manager_class($db);
-            $entity = new $entity_class($manager);
+            $manager = EntityManagerFactory::get($entity_class);
+            $entity = new $namespaced_class($manager);
+            
             return $entity;
         }
         else {

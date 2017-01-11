@@ -1,0 +1,79 @@
+<?php
+
+namespace Aston\Manager;
+
+// use Aston\Entity\BookEntity;
+use Aston\Entity\EntityInterface;
+use Aston\Factory\EntityFactory;
+
+/**
+ * Class AuthorEntityManager.
+ */
+class AuthorEntityManager extends EntityManager
+{
+    protected $db;
+    
+    public function __construct(\PDO $db)
+    {
+        $this->db = $db;
+    }
+    
+    public function addEntity(EntityInterface $entity)
+    {
+        $query = $this->db->prepare('INSERT INTO author (name, body) VALUES (:name, :body)');
+        $query->bindValue(':name', $entity->getName());
+        $query->bindValue(':body', $entity->getBody());
+        
+        $executed = $query->execute();
+        // $errors = $this->db->errorInfo();
+        // \Kint::dump($errors);
+        // \Kint::dump($executed);
+    }
+    
+    public function getEntity($id)
+    {
+        // $id = (int) $id;
+        // if ($id > 0) {
+        //     $query = $this->db->prepare('SELECT * FROM book WHERE id=:id');
+        //     $query->bindValue(':id', $id, \PDO::PARAM_INT);
+        //     $query->execute();
+        //
+        //     $result = $query->fetch(\PDO::FETCH_ASSOC);
+        //     return $result;
+        // }
+    }
+    
+    public function getEntities(array $ids)
+    {
+    }
+    
+    // public function getLastEntities($offset, $limit)
+    // {
+    //     $limit = (int)$limit;
+    //     $offset = (int)$offset;
+    //
+    //     if ($limit > 0 && is_numeric($offset)) {
+    //
+    //         $query = $this->db->prepare('SELECT * FROM book LIMIT :offset, :limit');
+    //         $query->bindValue(':offset', $offset, \PDO::PARAM_INT);
+    //         $query->bindValue(':limit', $limit, \PDO::PARAM_INT);
+    //
+    //         $executed = $query->execute();
+    //         $result = $query->fetchAll(\PDO::FETCH_ASSOC);
+    //         return $result;
+    //     } else {
+    //         throw new \Exception('Mauvais type de donnée pour la limite.');
+    //     }
+    // }
+    //
+    // public function deleteEntity($id)
+    // {
+    //     $id = (int)$id;
+    //
+    //     if ($id > 0) {
+    //         $query = $this->db->prepare('DELETE FROM book WHERE id=:id');
+    //         $query->bindValue(':id', $id);
+    //         $query->execute();
+    //     }
+    // }
+}
