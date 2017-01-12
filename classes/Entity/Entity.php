@@ -49,7 +49,7 @@ abstract class Entity implements EntityInterface
     
     public function delete()
     {
-    //     $this->manager->deleteEntity($this->getId());
+        $this->manager->deleteEntity($this->getId());
     //     // TODO : Message flash
     }
     
@@ -57,9 +57,9 @@ abstract class Entity implements EntityInterface
     {
         if (isset($data['title']) && $data['title']) {
             $class = get_called_class();
-            $book = EntityFactory::get($class);
-            $book->hydrate($data);
-            return $book;
+            $entity = EntityFactory::get($class);
+            $entity->hydrate($data);
+            return $entity;
         } else {
             throw new \Exception('Missing key "title" for Class BookEntity.');
         }

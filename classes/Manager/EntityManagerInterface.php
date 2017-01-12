@@ -15,4 +15,6 @@ interface EntityManagerInterface
 {
     public function addEntity(EntityInterface $entity);
     public function getEntity($id);
+    public function getEntities(array $ids);
+    public function deleteEntity($id);
 }

@@ -14,8 +14,20 @@ use Aston\Entity\EntityInterface;
 abstract class EntityManager implements EntityManagerInterface
 {
     protected $bd;
-
-    abstract public function addEntity(EntityInterface $entity);
-    abstract public function getEntity($id);
-    abstract public function getEntities(array $ids);
+    
+    public function addEntity(EntityInterface $entity)
+    {
+    }
+    
+    public function getEntity($id)
+    {
+    }
+    
+    public function getEntities(array $ids)
+    {
+    }
+    
+    public function deleteEntity($id)
+    {
+    }
 }
