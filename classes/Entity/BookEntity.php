@@ -15,8 +15,6 @@ class BookEntity extends Entity
     private $body;
     private $genre;
     
-    protected $manager;
-    
     /**
      * @return mixed
      */

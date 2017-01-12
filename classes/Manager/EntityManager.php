@@ -15,10 +15,9 @@ abstract class EntityManager implements EntityManagerInterface
 {
     protected $db;
     
-    public function __construct(\PDO $db)
+    final public function SetDependencyDb(\PDO $db)
     {
         $this->db = $db;
-        $this->checkIntegrity();
     }
     
     public
@@ -34,9 +33,9 @@ abstract class EntityManager implements EntityManagerInterface
             $query = $this->db->prepare("SELECT * FROM {$this->table} WHERE id=:id");
             $query->bindValue(':id', $id, \PDO::PARAM_INT);
             $query->execute();
-        
+            
             $result = $query->fetch(\PDO::FETCH_ASSOC);
-        
+            
             return $result;
         }
     }

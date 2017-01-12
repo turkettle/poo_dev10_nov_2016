@@ -27,6 +27,10 @@
                 <textarea name="body" type="text" class="form-control" id="body" placeholder="Description" rows="10"></textarea>
             </div>
         </div>
+
+        <input type="hidden" name="{{ token.name }}" value="{{ token.keypair.csrf_name }}">
+        <input type="hidden" name="{{ token.value }}" value="{{ token.keypair.csrf_value }}">
+
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
                 <button type="submit" class="btn btn-default">Ajouter</button>

@@ -12,11 +12,10 @@ class EntityFactory
 {
     public static function get($entity_class)
     {
-    
         if (class_exists($entity_class)) {
-            
             $manager = EntityManagerFactory::get($entity_class);
-            $entity = new $entity_class($manager);
+            $entity = new $entity_class();
+            $entity->setDependencyManager($manager);
     
             return $entity;
         }

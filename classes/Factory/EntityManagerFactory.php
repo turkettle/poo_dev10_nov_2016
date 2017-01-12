@@ -14,14 +14,13 @@ class EntityManagerFactory
 {
     public static function get($entity_class)
     {
-    
         $class_data = explode('\\', $entity_class);
         $manager_class = 'Aston\Manager\\' . end($class_data) . 'Manager';
-    
         if (class_exists($manager_class)) {
-            
             $db = Database::getConnection('PDO');
-            $manager = new $manager_class($db);
+            $manager = new $manager_class();
+            $manager->setDependencyDb($db);
+            $manager->checkIntegrity();
             
             return $manager;
         }

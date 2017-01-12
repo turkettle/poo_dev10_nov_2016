@@ -12,8 +12,6 @@ class AuthorEntity extends Entity
 {
     private $body;
     
-    protected $manager;
-    
     /**
      * @return mixed
      */

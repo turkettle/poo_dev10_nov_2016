@@ -18,7 +18,9 @@ abstract class Entity implements EntityInterface
     protected $id;
     protected $title;
     
-    public function __construct(EntityManagerInterface $manager)
+    protected $manager;
+    
+    final public function setDependencyManager(EntityManagerInterface $manager)
     {
         $this->manager = $manager;
     }
@@ -31,7 +33,7 @@ abstract class Entity implements EntityInterface
     public static function load($id)
     {
         if (is_numeric($id)) {
-        
+            
             $class = get_called_class();
             $manager = EntityManagerFactory::get($class);
             $data = $manager->getEntity($id);
@@ -39,9 +41,9 @@ abstract class Entity implements EntityInterface
                 return false;
             }
             $entity = $class::create($data);
-    
+            
             return $entity;
-        
+            
         } elseif (is_array($id)) {
             // $this = $this->manager->getBooks($id);
         } else {
@@ -52,7 +54,7 @@ abstract class Entity implements EntityInterface
     public function delete()
     {
         $this->manager->deleteEntity($this->getId());
-    //     // TODO : Message flash
+        //     // TODO : Message flash
     }
     
     public static function create(array $data)
@@ -61,6 +63,7 @@ abstract class Entity implements EntityInterface
             $class = get_called_class();
             $entity = EntityFactory::get($class);
             $entity->hydrate($data);
+            
             return $entity;
         } else {
             throw new \Exception('Missing key "title" for Class BookEntity.');
@@ -69,12 +72,14 @@ abstract class Entity implements EntityInterface
     
     /**
      * Méthode d'hydratation.
+     *
      * @param array $data
      */
-    public function hydrate(array $data) {
-    
+    public function hydrate(array $data)
+    {
+        
         foreach ($data as $property => $value) {
-    
+            
             $setter = 'set' . ucfirst($property);
             if (method_exists($this, $setter)) {
                 $this->$setter($value);
