@@ -15,6 +15,8 @@ use Aston\Manager\EntityManagerInterface;
 
 abstract class Entity implements EntityInterface
 {
+    protected $id;
+    protected $title;
     
     public function __construct(EntityManagerInterface $manager)
     {
@@ -77,6 +79,40 @@ abstract class Entity implements EntityInterface
             if (method_exists($this, $setter)) {
                 $this->$setter($value);
             }
+        }
+    }
+    
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+    
+    /**
+     * @param mixed $id
+     */
+    public function setId($id)
+    {
+        $id = (int)$id;
+        if ($id > 0) {
+            $this->id = $id;
+        }
+    }
+    
+    public function getTitle()
+    {
+        return $this->title;
+    }
+    
+    public function setTitle($title)
+    {
+        $title = htmlentities($title);
+        if (strlen($title) <= 50) {
+            $this->title = $title;
+        } else {
+            throw new Exception('Le titre ne peut pas dépasser 50 caractères.');
         }
     }
     
