@@ -32,6 +32,8 @@ $router->add('/book/list', 'GET', function () {
 $router->add('/book/add', 'GET|POST', function () {
     
     $data = [];
+    $c = ServiceContainer::getInstance();
+    
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         
         // Validation CSRF.
@@ -55,14 +57,12 @@ $router->add('/book/add', 'GET|POST', function () {
             $_SESSION['errors'] = $errors;
             $data['errors'] = $_SESSION['errors'];
             unset($_SESSION['errors']);
-            $data['form'] = $_POST;
+            $data['book'] = $_POST;
         } else {
-            $entity = BookEntity::create($_POST);
-            $entity->save();
+            $c->get('capsule');
+            \Aston\Entity\Book::create($_POST);
         }
     }
-    
-    $c = ServiceContainer::getInstance();
     
     // Génération d'un token CSRF avec Slim CSRF.
     $slimGuard = $c->get('csrf');
@@ -81,6 +81,10 @@ $router->add('/book/add', 'GET|POST', function () {
         'value' => $csrfValueKey,
         'keypair' => $keyPair,
     ];
+    
+    $c->get('capsule');
+    $data['authors'] = \Aston\Entity\Author::all();
+    $data['genres'] = \Aston\Entity\Genre::all();
     
     $twig = $c->get('twig');
     
@@ -111,6 +115,25 @@ $router->add('/admin/log', 'GET', function () {
     }
     
     return $twig->render('log_admin.html.twig', ['logs' => $logs]);
+});
+
+$router->add('/book/edit/{n:id}', 'GET|POST', function ($id) {
+    
+    $data = [];
+    $c = ServiceContainer::getInstance();
+    $c->get('capsule');
+    
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        \Aston\Entity\Book::find($id)->update($_POST);
+    }
+    
+    $data['book'] = \Aston\Entity\Book::find($id);
+    $data['authors'] = \Aston\Entity\Author::all();
+    $data['genres'] = \Aston\Entity\Genre::all();
+    
+    $twig = $c->get('twig');
+    
+    return $twig->render('book_form.html.twig', $data);
 });
 
 $router->add('/book/delete/{n:id}', 'GET', function ($id) {
