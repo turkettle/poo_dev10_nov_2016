@@ -4,8 +4,6 @@ use Aston\Factory\EntityManagerFactory;
 use Aston\Core\ServiceContainer;
 use Aston\Entity\BookEntity;
 use Aston\Entity\AuthorEntity;
-use Slim\Csrf\Guard;
-use Respect\Validation\Validator as v;
 use Respect\Validation\Exceptions\NestedValidationException;
 
 $router->add('/', 'GET', function () {
@@ -31,12 +29,43 @@ $router->add('/book/list', 'GET', function () {
     return $twig->render('book_list.html.twig', ['books' => $entities]);
 });
 
-$router->add('/book/add', 'GET', function () {
+$router->add('/book/add', 'GET|POST', function () {
     
-    \kint::dump($_SESSION);
+    $data = [];
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        
+        // Validation CSRF.
+        if (key_exists($_POST['csrf_name'], $_SESSION['csrf'])) {
+            if ($_SESSION['csrf'][$_POST['csrf_name']] != $_POST['csrf_value']) {
+                header('Location: /');
+            }
+        } else {
+            header('Location: /');
+        }
+        
+        $errors = [];
+        $v = ServiceContainer::getInstance()->get('validator');
+        try {
+            $v->stringType()->length(1, 50)->assert($_POST['title']);
+        } catch (NestedValidationException $exception) {
+            $errors['title'] = $exception->getMessages();
+        }
+        
+        if ($errors) {
+            $_SESSION['errors'] = $errors;
+            $data['errors'] = $_SESSION['errors'];
+            unset($_SESSION['errors']);
+            $data['form'] = $_POST;
+        } else {
+            $entity = BookEntity::create($_POST);
+            $entity->save();
+        }
+    }
+    
+    $c = ServiceContainer::getInstance();
     
     // Génération d'un token CSRF avec Slim CSRF.
-    $slimGuard = new Guard;
+    $slimGuard = $c->get('csrf');
     $slimGuard->validateStorage();
     
     // Generate new tokens
@@ -47,15 +76,15 @@ $router->add('/book/add', 'GET', function () {
     // Validate retrieved tokens
     // $slimGuard->validateToken($_POST[$csrfNameKey], $_POST[$csrfValueKey]);
     
-    $token = [
+    $data['token'] = [
         'name' => $csrfNameKey,
         'value' => $csrfValueKey,
         'keypair' => $keyPair,
     ];
     
-    $twig = ServiceContainer::getInstance()->get('twig');
+    $twig = $c->get('twig');
     
-    return $twig->render('book_form.html.twig', ['token' => $token, 'errors' => $_SESSION['errors']]);
+    return $twig->render('book_form.html.twig', $data);
 });
 
 $router->add('/admin/log', 'GET', function () {
@@ -89,34 +118,6 @@ $router->add('/book/delete/{n:id}', 'GET', function ($id) {
     $twig = ServiceContainer::getInstance()->get('twig');
     
     return $twig->render('confirm.html.twig', ['id' => $id]);
-});
-
-$router->post('/book/post/add', function () {
-    
-    // Validation CSRF.
-    if (key_exists($_POST['csrf_name'], $_SESSION['csrf'])) {
-        if ($_SESSION['csrf'][$_POST['csrf_name']] != $_POST['csrf_value']) {
-            header('Location: /');
-        }
-    } else {
-        header('Location: /');
-    }
-    
-    $errors = [];
-    try {
-        v::stringType()->length(1, 50)->assert($_POST['title']);
-    } catch (NestedValidationException $exception) {
-        $errors['title'] = $exception->getMessages();
-    }
-    
-    if ($errors) {
-        $_SESSION['errors'] = $errors;
-        header('Location: /book/add');
-    }
-    
-    // $entity = BookEntity::create($_POST);
-    // $entity->save();
-    // header('Location: /book/add');
 });
 
 $router->post('/book/delete/confirm', function () {
